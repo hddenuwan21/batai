@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>About BAT AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reusing your existing styles with some additions */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: rgba(230, 230, 230, 0.8);
+            --secondary: rgba(12, 13, 14, 0.8);
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-highlight: rgba(255, 255, 255, 0.3);
+            --text: rgba(255, 255, 255, 0.9);
+            --text-light: rgba(255, 255, 255, 0.7);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --backdrop-blur: blur(10px);
+            --transition: all 0.3s ease-out;
+            --user-bubble: rgba(110, 72, 170, 0.8);
+            --bot-bubble: rgba(240, 242, 245, 0.9);
+            --bot-text: #1f1f1f;
+            --code-bg: #282c34;
+            --code-text: #abb2bf;
+
+        }
+
+        body {
+            background: url(t.jpg) no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            padding-top: calc(var(70px) + 20px);
+        }
+
+        /* Header Styles (same as your existing header) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
+            border-bottom: 1px solid var(--glass-border);
+            color: white;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(110, 72, 170, 0.4);
+            position: relative;
+        }
+
+        .avatar img {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+        }
+
+        .avatar-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 3px solid rgba(0, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .avatar-pulse:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.5;
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+
+            40% {
+                opacity: 0.8;
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                opacity: 0.3;
+                border-color: rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+                border-color: rgba(255, 255, 255, 0);
+            }
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: whitePulse 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes whitePulse {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            }
+
+            100% {
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* Header Content */
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+
+
+            width: 100%;
+        }
+
+        /* Mobile Menu Button */
+        .menu-toggle {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
+            transition: var(--transition);
+            margin-left: auto;
+            position: relative;
+            z-index: 1001;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .menu-toggle:hover {
+            background: var(--glass-highlight);
+        }
+
+        nav {
+            transition: var(--transition);
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            justify-content: center;
+            width: auto;
+        }
+
+        nav li {
+            text-align: center;
+            padding: 5px;
+            margin: 0 5px;
+            margin-top: -40px;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            display: block;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(255, 250, 250, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .logo-container {
+                padding: 0 10px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            nav {
+                max-height: 0;
+                overflow: hidden;
+            }
+
+            nav.active {
+                max-height: 500px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                margin-top: 10px;
+            }
+
+            nav li {
+                margin: 5px 0;
+                padding: 10px;
+                color: #000000;
+            }
+
+            nav a {
+                margin: 0;
+                background: rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        /* About Page Specific Styles */
+        .about-container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 2rem;
+
+
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+
+
+
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #c9d6ff;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: #c9d6ff;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .features-list {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .creator-info {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .creator-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 1.5rem;
+            border: 3px solid rgba(110, 72, 170, 0.8);
+            object-fit: cover;
+        }
+
+        .creator-details {
+            flex: 1;
+        }
+
+        .creator-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #c9d6ff;
+        }
+
+        .creator-title {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: #c9d6ff;
+            transform: translateY(-2px);
+        }
+
+        .license-info {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background: var(--glass);
+            backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
+            border-bottom: 1px solid var(--glass-border);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(110, 72, 170, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .creator-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-container {
+
+                padding: 0rem;
+            }
+
+
+            .creator-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="avatar-container">
+                    <div class="avatar-pulse"></div>
+                    <div class="avatar-pulse"></div>
+                    <div class="avatar">
+                        <img src="e.png" alt="AI Girl Avatar">
+                    </div>
+                </div>
+                <div class="logo-text">bat ai</div>
+            </div>
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+        </div>
+
+        <nav id="main-nav">
+            <ul>
+                <li><a href="bot.html">AI Chat</a></li>
+                <li><a href="image.html">Image Generate</a></li>
+                <li><a href="#">Game</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="about-container">
+        <div class="glass-panel">
+            <h1>About BAT AI</h1>
+
+            <p>BAT AI is an innovative platform that combines artificial intelligence with creative tools to empower
+                users with cutting-edge technology for image generation, chat, and more.</p>
+
+            <h2>Features</h2>
+            <ul class="features-list">
+                <li><strong>AI Image Generation:</strong> Create stunning images from text prompts with various artistic
+                    styles</li>
+                <li><strong>Intelligent Chat:</strong> Engage in natural conversations with our advanced AI chatbot</li>
+                <li><strong>Creative Tools:</strong> Explore different creative possibilities with our AI-powered
+                    features</li>
+                <li><strong>User-Friendly Interface:</strong> Simple and intuitive design for seamless user experience
+                </li>
+                <li><strong>Fast Processing:</strong> Quick generation times with high-quality results</li>
+            </ul>
+
+            <h2>Technology</h2>
+            <p>BAT AI leverages state-of-the-art artificial intelligence models to deliver high-quality results. Our
+                system combines multiple AI technologies to provide the best possible experience for our users.</p>
+
+            <div class="creator-info">
+                <img src="me.jpg" alt="HD Denuwan" class="creator-avatar">
+                <div class="creator-details">
+                    <div class="creator-name">HD Denuwan</div>
+                    <div class="creator-title">Creator & Developer</div>
+                    <p>Student at Open University of Sri Lanka</p>
+                    <div class="social-links">
+                        <a href="https://hddenuwan21.github.io/ba//codegeek/index.html" class="social-link"
+                            target="_blank">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/hd-denuwan-938328295/" class="social-link" target="_blank">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/hddenuwan21" class="social-link" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:your-email@example.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="license-info">
+                <h2>License & Usage</h2>
+                <p>This system is created by HD Denuwan at the Open University of Sri Lanka.</p>
+                <p><strong>No Copyright:</strong> This application is provided without copyright restrictions.</p>
+                <p><strong>Rules:</strong> Users are free to use, modify, and distribute this software with attribution.
+                </p>
+                <p><strong>Attribution:</strong> Please include a link to the original creator's website when sharing or
+                    modifying this work.</p>
+
+                <a href="https://hddenuwan21.github.io/ba//codegeek/index.html" class="btn" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Visit Creator's Website
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle mobile menu (same as your existing script)
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuToggle.textContent = mainNav.classList.contains('active') ? '✕' : '☰';
+
+            if (window.innerWidth <= 768) {
+                const header = document.querySelector('header');
+                if (mainNav.classList.contains('active')) {
+                    header.style.height = 'auto';
+                } else {
+                    header.style.height = 'var(--header-height)';
+                }
+            }
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    mainNav.classList.remove('active');
+                    menuToggle.textContent = '☰';
+                    document.querySelector('header').style.height = 'var(--header-height)';
+                }
+            });
+        });
+
+        // Adjust header height on resize
+        function adjustHeaderHeight() {
+            const header = document.querySelector('header');
+            if (window.innerWidth > 768) {
+                header.style.height = 'auto';
+                mainNav.classList.remove('active');
+                menuToggle.textContent = '☰';
+            } else {
+                if (!mainNav.classList.contains('active')) {
+                    header.style.height = 'var(--header-height)';
+                }
+            }
+        }
+
+        window.addEventListener('resize', adjustHeaderHeight);
+        adjustHeaderHeight();
+    </script>
+</body>
+
+</html>
